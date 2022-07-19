@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main-layout :: main-fragment(
+                                                ~{::title},
+                                                ~{:: #user-static-resources},
+                                                ~{:: #user-header},
+                                                ~{:: #user-nav},
+                                                ~{:: #user-main-content},
+                                                ~{:: #user-footer}
+                                               )}">
+
+<head>
+    <title>Title of About Page</title>
+    <th:block id="user-static-resources">
+        <script type="text/javascript" src="../static/about.js" th:src="@{/about.js}"></script>
+    </th:block>
+</head>
+<body>
+<div id="user-header">
+    Header of About Page
+</div>
+<div id="user-nav" th:replace="~{/fragments/app-fragments :: nav-default}">
+    Nav
+</div>
+<div id="user-main-content">
+    <h2>Users</h2>
+    <div>회원들을 보여줄게!</div>
+    <table border="1">
+        <tr>
+           <th>아이디</th>
+            <th>이메일</th>
+            <th>이름</th>
+            <th>전화번호</th>
+        </tr>
+        <tr th:each="message : ${messages}">
+            <td th:text="${message.id}">1</td>
+            <td><a href="#" th:text="${message.email}">email ...</a></td>
+            <td th:text="${message.name}">name ...</td>
+            <td th:text="${message.phone}">phone ...</td>
+        </tr>
+    </table>
+</div>
+<div id="user-footer" th:replace="~{/fragments/app-fragments :: copyright}">
+    Footer
+</div>
+</body>
+</html>

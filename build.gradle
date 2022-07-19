@@ -24,6 +24,8 @@ ext {
 
 dependencies {
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
