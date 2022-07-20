@@ -14,12 +14,10 @@ import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,7 +51,7 @@ public class HomeController {
 
         // parameter 세팅
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-        map.add("email", "rlaalsrb0466@naver.com");
+        map.add("email", "test@naver.com");
 
         // REST API 호출 - URI 생성
         URL url = new URL(request.getRequestURL().toString());
@@ -73,6 +71,11 @@ public class HomeController {
 
         return mav;
 
+    }
+
+    @GetMapping(value = "/signup")
+    public String signup() {
+        return "signup";
     }
 
     @GetMapping(value = "/products")

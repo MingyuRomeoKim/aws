@@ -24,32 +24,42 @@
     Nav
 </div>
 <div id="user-main-content">
-    <h2>Users</h2>
-    <div>회원들을 보여줄게!</div>
-    <table class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>Email</td>
-            <td>이름</td>
-            <td>전화번호</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if="${messages.empty}">
-            <td colspan="4">가입 한 회원이 아직 없네요.</td>
-        </tr>
-        <tr th:each="message : ${messages}">
-            <td th:text="${message.id}">id ...</td>
-            <td th:text="${message.email}">email ...</td>
-<!--            <td><a href="view.html" th:href="@{'/' + ${task.id}}" th:text="${task.title}">Title ...</a></td>-->
-            <td th:text="${message.name}">name ...</td>
-            <td th:text="${message.phone}">phone ...</td>>
-        </tr>
-        </tbody>
-    </table>
+    <h2>signup</h2>
+    <div>회원 가입을 진행하세요.</div>
+        <table class="table table-bordered table-striped">
+            <thead>
 
+            </thead>
+            <tbody>
+            <tr>
+                <td>Email</td>
+                <td>
+                    <input type="email" name="email" id="email">
+                </td>
+            </tr>
+            <tr>
+                <td>비밀번호</td>
+                <td>
+                    <input type="password" name="password" id="password">
+                </td>
+            </tr>
+            <tr>
+                <td>이름</td>
+                <td>
+                    <input type="text" name="name" id="name">
+                </td>
+            </tr>
+            <tr>
+                <td>전화번호</td>
+                <td>
+                    <input type="number" name="phone" id="phone">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-default" onclick="return checkValidationFromSignup();" > 가입하기 </button>
 </div>
+
 <div id="user-footer" th:replace="~{/fragments/app-fragments :: copyright}">
     Footer
 </div>

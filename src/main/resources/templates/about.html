@@ -17,7 +17,7 @@
     </th:block>
 </head>
 <body>
-<div id="about-header">
+<div id="about-header" th:replace="~{/fragments/app-fragments :: header-default}">
     Header of About Page
 </div>
 <div id="about-nav" th:replace="~{/fragments/app-fragments :: nav-default}">

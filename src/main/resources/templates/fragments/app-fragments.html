@@ -1,10 +1,17 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head >
     <meta charset="UTF-8" />
-    <title>App Fragments</title>
+    <title>Spring Boot & MongoDB Site</title>
 </head>
 <body>
+<!-- Default Header-->
+<div th:fragment = "header-default">
+    <p>Spring Boot & MongoDB & Thymeleaf 를 활용한 홈페이지</p>
+    <p>
+        <a href="/signup" th:href="@{/signup}" class="btn btn-large btn-success">Sign up</a>
+    </p>
+</div>
 <!-- Default Navigator -->
 <ul th:fragment = "nav-default">
     <li><a th:href="@{/}">Home</a></li>
@@ -18,7 +25,7 @@
     <li><a th:href="@{/admin/orders}">Order Management</a></li>
 </ul>
 <div th:fragment="copyright">
-    &copy; o7planning.org
+    &copy; kimmingyu.co.kr
 </div>
 </body>
 </html>
