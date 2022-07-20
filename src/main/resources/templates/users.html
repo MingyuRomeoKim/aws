@@ -29,10 +29,11 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <td>ID</td>
+            <td>회원번호</td>
             <td>Email</td>
             <td>이름</td>
             <td>전화번호</td>
+            <td>가입일</td>
         </tr>
         </thead>
         <tbody>
@@ -40,11 +41,12 @@
             <td colspan="4">가입 한 회원이 아직 없네요.</td>
         </tr>
         <tr th:each="message : ${messages}">
-            <td th:text="${message.id}">id ...</td>
+            <td th:text="${message.idx}">idx ...</td>
             <td th:text="${message.email}">email ...</td>
 <!--            <td><a href="view.html" th:href="@{'/' + ${task.id}}" th:text="${task.title}">Title ...</a></td>-->
             <td th:text="${message.name}">name ...</td>
             <td th:text="${message.phone}">phone ...</td>>
+            <td th:text="${message.regDate}">regDate ...</td>>
         </tr>
         </tbody>
     </table>

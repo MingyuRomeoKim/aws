@@ -9,7 +9,8 @@ public interface MemberRepository extends MongoRepository<Member, String> {
 
     Member findByEmail(String email);
     Member findByPhone(String phone);
+    Member findByIdx(Long idx);
 
-
+    List<Member> findAllByOrderByIdxDesc();
     List<Member> findAllByOrderByNameDesc();
 }

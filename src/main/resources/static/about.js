@@ -39,10 +39,16 @@ function checkValidationFromSignup() {
 
     xhr.onload = function () {
         if(xhr.status === 201 || xhr.status === 200) {
-            alert("회원 가입 완료!");
-            document.location.href="/users";
+            var json = JSON.parse(xhr.responseText);
+            console.log(json);
+            if(json.value == true) {
+                alert("회원 가입 완료!");
+                document.location.href="/users";
+            }else {
+                alert("회원 가입 실패! : "+json.message);
+            }
         }else{
-            alert("회원 가입 실패. 무언가 잘못 되었어요. 관리자에게 문의하세요.");
+            alert("API 서버가 죽어있습니다. 서버 상태 : "+xhr.status);
             return false;
         }
     }

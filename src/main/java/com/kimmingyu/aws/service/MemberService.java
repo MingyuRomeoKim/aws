@@ -14,7 +14,11 @@ public interface MemberService {
 
     Member findByPhone(String phone);
 
+    Member findByIdx(Long idx);
+
     List<Member> findAllByOrderByNameDesc();
+
+    List<Member> findAllByOrderByIdxDesc();
 
     Member saveOrUpdateMember(Member member);
 

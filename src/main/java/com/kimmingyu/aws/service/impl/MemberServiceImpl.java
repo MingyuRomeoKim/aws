@@ -30,6 +30,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member findByIdx(Long idx) { return null; }
+
+    @Override
+    public List<Member> findAllByOrderByIdxDesc() { return null; }
+
+    @Override
     public List<Member> findAllByOrderByNameDesc() {
         return memberRepository.findAllByOrderByNameDesc();
     }

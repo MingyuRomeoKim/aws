@@ -1,16 +1,33 @@
 package com.kimmingyu.aws.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Document(collection = "members")
 public class Member {
+    @Transient
+    public static final String SEQUENCE_NAME = "members_sequence";
+
     @Id
     private String id;
+    private Long idx;
+    @NotBlank
+    @Size(max = 10)
     private String name;
+    @NotBlank
+    @Size(max = 100)
+    @Indexed(unique = true)
     private String email;
+    @NotBlank
+    @Size(min = 10)
     private String password;
     private String phone;
+    private String regDate;
 
     public String getName() {
         return name;
@@ -36,6 +53,14 @@ public class Member {
         this.id = id;
     }
 
+    public Long getIdx() {
+        return idx;
+    }
+
+    public void setIdx(Long idx) {
+        this.idx = idx;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -52,14 +77,24 @@ public class Member {
         this.phone = phone;
     }
 
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
     @Override
     public String toString() {
         return "Member{" +
                 "id='" + id + '\'' +
+                ", idx='" + idx + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", password=" + password +
-                ", phone=" + phone +
+                ", password=" + password + '\'' +
+                ", phone=" + phone + '\'' +
+                ", regDate=" + regDate +
                 '}';
     }
 }
