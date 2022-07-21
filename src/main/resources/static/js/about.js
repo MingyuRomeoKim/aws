@@ -30,7 +30,7 @@ function checkValidationFromSignup() {
 
     let post = JSON.stringify(postObj)
 
-    const url = "/members/save"
+    const url = "/api/members/save"
     let xhr = new XMLHttpRequest()
 
     xhr.open('POST', url, true)
@@ -53,3 +53,20 @@ function checkValidationFromSignup() {
         }
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab active
+    let nowTab = window.location.pathname.split("/")[1];
+    document.querySelectorAll(".navbar-nav.mr-auto > li")
+        .forEach(function(each){
+            each.classList.remove('active')
+        });
+    switch (nowTab) {
+        case "" :
+        case "home" :
+        case "main" :
+        case "dashboard" : document.getElementById("nav-dashboard").classList.add("active"); break;
+        default : document.getElementById("nav-"+nowTab).classList.add("active"); break;
+    }
+
+});

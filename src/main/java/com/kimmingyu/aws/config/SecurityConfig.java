@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/").permitAll()
             .antMatchers("/login").permitAll()
             .antMatchers("/signup").permitAll()
-            .antMatchers("/members/**").permitAll()
+            .antMatchers("/api/**").permitAll()
             .and()
             .csrf().disable()
             .formLogin()
@@ -63,6 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-        web.ignoring().antMatchers("/resources/**","/css/**","/js/**");
+        web.ignoring().antMatchers("/resources/**","/css/**","/js/**","/images/**");
     }
 }

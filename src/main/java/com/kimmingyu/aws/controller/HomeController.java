@@ -35,9 +35,24 @@ public class HomeController {
     @Autowired
     private MemberRepository memberRepository;
 
-    @GetMapping(value = "/")
-    public String home() {
-        return "home";
+    @GetMapping(value = {"/","/index","/main","/dashboard"})
+    public ModelAndView dashboard() {
+        // Model And View 데이터 처리
+        ModelAndView mav = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Member member = memberRepository.findByEmail(auth.getName());
+        if(member != null) {
+            mav.addObject("currentMember",member);
+            mav.addObject("fullName","Welcome "+member.getName());;
+            if(member.getRoles().equals("MEMBER")) {
+                mav.addObject("roleMessage","회원가입 및 로그인이 완료되었습니다!");
+            }
+        }else {
+
+        }
+
+        mav.setViewName("dashboard");
+        return mav;
     }
 
     @GetMapping(value = "/login")
@@ -51,22 +66,6 @@ public class HomeController {
         Member member = new Member();
         mav.addObject("member",member);
         mav.setViewName("signup");
-        return mav;
-    }
-
-    @GetMapping(value = "/dashboard")
-    public ModelAndView dashboard() {
-        ModelAndView mav = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Member member = memberRepository.findByEmail(auth.getName());
-        mav.addObject("currentMember",member);
-        mav.addObject("fullName","Welcome "+member.getName());;
-        if(member.getRoles().equals("ADMIN")) {
-            mav.addObject("roleMessage","Content Available Only For Member with Admin Role");
-        } else {
-            mav.addObject("roleMessage","회원가입 및 로그인이 완료되었습니다!");
-        }
-        mav.setViewName("dashboard");
         return mav;
     }
 
@@ -93,12 +92,23 @@ public class HomeController {
         URI uri = new URI(scheme,userInfo,host,port,null,null,null);
 
         // REST API 호출 - 데이터 수신 및 객체화
-        String result = restTemplate.getForObject(uri+"/members/orderByName", String.class);
+        String result = restTemplate.getForObject(uri+"/api/members/orderByName", String.class);
         Gson gson = new Gson();
         List<Map<String,Object>> messages = gson.fromJson(result, new TypeToken<List<Map<String, Object>>>() {}.getType());
 
-        ModelAndView mav = new ModelAndView("users");
+        // Model And View 데이터 처리
+        ModelAndView mav = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Member member = memberRepository.findByEmail(auth.getName());
+        if(member != null) {
+            mav.addObject("currentMember",member);
+            mav.addObject("fullName","Welcome "+member.getName());;
+            if(member.getRoles().equals("MEMBER")) {
+                mav.addObject("roleMessage","회원가입 및 로그인이 완료되었습니다!");
+            }
+        }
         mav.addObject("messages",messages);
+        mav.setViewName("users");
 
         return mav;
 

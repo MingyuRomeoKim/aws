@@ -1,4 +1,4 @@
-package com.kimmingyu.aws.controller;
+package com.kimmingyu.aws.controller.api;
 
 import com.kimmingyu.aws.dto.MemberDTO;
 import com.kimmingyu.aws.model.Member;
@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
-@RequestMapping("/members")
+@RequestMapping("/api/members")
 public class MemberController {
 
     @Autowired
