@@ -1,31 +1,13 @@
 <!DOCTYPE html>
-<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layouts/main-layout :: main-fragment(
-                                                ~{::title},
-                                                ~{:: #user-static-resources},
-                                                ~{:: #user-header},
-                                                ~{:: #user-nav},
-                                                ~{:: #user-main-content},
-                                                ~{:: #user-footer}
-                                               )}">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
 <head>
-    <title>Title of About Page</title>
-    <th:block id="user-static-resources">
-        <script type="text/javascript" src="../static/about.js" th:src="@{/about.js}"></script>
-    </th:block>
+    <title>Dashboard</title>
 </head>
 <body>
-<div id="user-header" th:replace="~{fragments/app-fragments :: header-default}">
-    Header of About Page
-</div>
-<div id="user-nav" th:replace="~{fragments/app-fragments :: nav-default}">
-    Nav
-</div>
-<div id="user-main-content">
-    <h2>Users</h2>
-    <div>회원들을 보여줄게!</div>
+<div layout:fragment="content">
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <h2>회원 목록 게시판</h2>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -43,17 +25,13 @@
         <tr th:each="message : ${messages}">
             <td th:text="${message.idx}">idx ...</td>
             <td th:text="${message.email}">email ...</td>
-<!--            <td><a href="view.html" th:href="@{'/' + ${task.id}}" th:text="${task.title}">Title ...</a></td>-->
+            <!--            <td><a href="view.html" th:href="@{'/' + ${task.id}}" th:text="${task.title}">Title ...</a></td>-->
             <td th:text="${message.name}">name ...</td>
             <td th:text="${message.phone}">phone ...</td>>
             <td th:text="${message.regDate}">regDate ...</td>>
         </tr>
         </tbody>
     </table>
-
-</div>
-<div id="user-footer" th:replace="~{fragments/app-fragments :: copyright}">
-    Footer
 </div>
 </body>
 </html>

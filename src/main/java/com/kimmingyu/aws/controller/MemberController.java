@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,12 +22,18 @@ public class MemberController {
 
     @Autowired
     private MemberServiceImpl memberService;
+
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
 
     @GetMapping(value = "/")
     public List<MemberDTO> getAllMembers() {
         return ObjectMapperUtils.mapAll(memberService.findAll(), MemberDTO.class);
+    }
+
+    @PostMapping(value = "/login")
+    public String login() {
+        return "";
     }
 
     @GetMapping(value = "/byEmail/{email}")
@@ -59,6 +64,7 @@ public class MemberController {
             memberDTO.setIdx(sequenceGeneratorService.generateSequence(Member.SEQUENCE_NAME));
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             memberDTO.setRegDate(dateTimeFormatter.format(LocalDateTime.now()).toString());
+
             member = memberService.saveOrUpdateMember(ObjectMapperUtils.map(memberDTO, Member.class));
         }
 

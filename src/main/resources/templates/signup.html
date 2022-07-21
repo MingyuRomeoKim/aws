@@ -1,67 +1,33 @@
 <!DOCTYPE html>
-<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layouts/main-layout :: main-fragment(
-                                                ~{::title},
-                                                ~{:: #user-static-resources},
-                                                ~{:: #user-header},
-                                                ~{:: #user-nav},
-                                                ~{:: #user-main-content},
-                                                ~{:: #user-footer}
-                                               )}">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
 <head>
-    <title>Title of About Page</title>
-    <th:block id="user-static-resources">
-        <script type="text/javascript" src="../static/about.js" th:src="@{/about.js}"></script>
-    </th:block>
+    <title>Signup</title>
 </head>
 <body>
-<div id="user-header" th:replace="~{fragments/app-fragments :: header-default}">
-    Header of About Page
-</div>
-<div id="user-nav" th:replace="~{fragments/app-fragments :: nav-default}">
-    Nav
-</div>
-<div id="user-main-content">
-    <h2>signup</h2>
-    <div>회원 가입을 진행하세요.</div>
-        <table class="table table-bordered table-striped">
-            <thead>
+<div layout:fragment="content">
 
-            </thead>
-            <tbody>
-            <tr>
-                <td>Email</td>
-                <td>
-                    <input type="email" name="email" id="email">
-                </td>
-            </tr>
-            <tr>
-                <td>비밀번호</td>
-                <td>
-                    <input type="password" name="password" id="password">
-                </td>
-            </tr>
-            <tr>
-                <td>이름</td>
-                <td>
-                    <input type="text" name="name" id="name">
-                </td>
-            </tr>
-            <tr>
-                <td>전화번호</td>
-                <td>
-                    <input type="number" name="phone" id="phone">
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <button type="button" class="btn btn-default" onclick="return checkValidationFromSignup();" > 가입하기 </button>
-</div>
+    <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
+    <h1 class="h3 mb-3 font-weight-normal">Signup Here</h1>
+    <div th:if="${param.error}">
+        Invalid email and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <label for="email" class="sr-only">Username</label>
+    <input type="email" name="email" id="email" class="form-control" placeholder="email" required="" />
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" name="password" id="password" class="form-control" placeholder="Password" required="" />
+    <label for="name" class="sr-only">Full Name</label>
+    <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required="" />
+    <label for="phone" class="sr-only">Phone Number</label>
+    <input type="number" name="phone" id="phone" class="form-control" placeholder="Your Phone Number" required="" />
+    <button class="btn btn-lg btn-primary btn-block" onclick="return checkValidationFromSignup();">Sign Up</button>
 
-<div id="user-footer" th:replace="~{fragments/app-fragments :: copyright}">
-    Footer
+    <form class="form-signin" th:action="@{/login}" method="get">
+        <button class="btn btn-md btn-success btn-block" type="Submit">Sign In</button>
+    </form>
 </div>
 </body>
 </html>

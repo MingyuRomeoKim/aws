@@ -3,11 +3,16 @@ package com.kimmingyu.aws.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.kimmingyu.aws.model.Member;
+import com.kimmingyu.aws.repository.MemberRepository;
 import org.json.JSONException;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -27,10 +32,42 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
+    @Autowired
+    private MemberRepository memberRepository;
 
     @GetMapping(value = "/")
     public String home() {
         return "home";
+    }
+
+    @GetMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping(value = "/signup")
+    public ModelAndView signup() {
+        ModelAndView mav = new ModelAndView();
+        Member member = new Member();
+        mav.addObject("member",member);
+        mav.setViewName("signup");
+        return mav;
+    }
+
+    @GetMapping(value = "/dashboard")
+    public ModelAndView dashboard() {
+        ModelAndView mav = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Member member = memberRepository.findByEmail(auth.getName());
+        mav.addObject("currentMember",member);
+        mav.addObject("fullName","Welcome "+member.getName());;
+        if(member.getRoles().equals("ADMIN")) {
+            mav.addObject("roleMessage","Content Available Only For Member with Admin Role");
+        } else {
+            mav.addObject("roleMessage","회원가입 및 로그인이 완료되었습니다!");
+        }
+        mav.setViewName("dashboard");
+        return mav;
     }
 
     @GetMapping(value = "/users")
@@ -65,11 +102,6 @@ public class HomeController {
 
         return mav;
 
-    }
-
-    @GetMapping(value = "/signup")
-    public String signup() {
-        return "signup";
     }
 
     @GetMapping(value = "/products")

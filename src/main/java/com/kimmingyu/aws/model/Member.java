@@ -4,9 +4,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Document(collection = "members")
 public class Member {
@@ -15,19 +17,30 @@ public class Member {
 
     @Id
     private String id;
+
     private Long idx;
+
     @NotBlank
     @Size(max = 10)
     private String name;
+
     @NotBlank
     @Size(max = 100)
     @Indexed(unique = true)
     private String email;
+
     @NotBlank
     @Size(min = 10)
     private String password;
+
     private String phone;
+
     private String regDate;
+
+    private boolean enabled;
+
+    @DBRef
+    private Set<Role> roles;
 
     public String getName() {
         return name;
@@ -83,6 +96,22 @@ public class Member {
 
     public void setRegDate(String regDate) {
         this.regDate = regDate;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
