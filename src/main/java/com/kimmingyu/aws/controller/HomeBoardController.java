@@ -1,9 +1,9 @@
 package com.kimmingyu.aws.controller;
 
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kimmingyu.aws.model.Member;
+import com.kimmingyu.aws.repository.BoardRepository;
 import com.kimmingyu.aws.repository.MemberRepository;
 import org.json.JSONException;
 import org.json.simple.parser.ParseException;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,48 +31,17 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class HomeController {
+@RequestMapping(value = "/boards")
+public class HomeBoardController {
+
+    @Autowired
+    private BoardRepository boardRepository;
 
     @Autowired
     private MemberRepository memberRepository;
 
-    @GetMapping(value = {"/","/index","/main","/dashboard"})
-    public ModelAndView dashboard() {
-        // Model And View 데이터 처리
-        ModelAndView mav = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Member member = memberRepository.findByEmail(auth.getName());
-        if(member != null) {
-            mav.addObject("currentMember",member);
-            mav.addObject("fullName","Welcome "+member.getName());;
-            if(member.getRoles().equals("MEMBER")) {
-                mav.addObject("roleMessage","회원가입 및 로그인이 완료되었습니다!");
-            }
-        }else {
-
-        }
-
-        mav.setViewName("dashboard");
-        return mav;
-    }
-
-    @GetMapping(value = "/login")
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping(value = "/signup")
-    public ModelAndView signup() {
-        ModelAndView mav = new ModelAndView();
-        Member member = new Member();
-        mav.addObject("member",member);
-        mav.setViewName("signup");
-        return mav;
-    }
-
-    @GetMapping(value = "/users")
-    public ModelAndView users(HttpServletRequest request) throws MalformedURLException, URISyntaxException, ParseException, JSONException {
-
+    @GetMapping(value = {"","/"})
+    public ModelAndView boards(HttpServletRequest request) throws MalformedURLException, URISyntaxException, ParseException, JSONException {
         List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
         converters.add(new FormHttpMessageConverter());
         converters.add(new StringHttpMessageConverter());
@@ -92,7 +62,7 @@ public class HomeController {
         URI uri = new URI(scheme,userInfo,host,port,null,null,null);
 
         // REST API 호출 - 데이터 수신 및 객체화
-        String result = restTemplate.getForObject(uri+"/api/members/orderByIdxDesc", String.class);
+        String result = restTemplate.getForObject(uri+"/api/boards/orderByIdxDesc", String.class);
         Gson gson = new Gson();
         List<Map<String,Object>> messages = gson.fromJson(result, new TypeToken<List<Map<String, Object>>>() {}.getType());
 
@@ -103,19 +73,25 @@ public class HomeController {
         if(member != null) {
             mav.addObject("currentMember",member);
             mav.addObject("fullName","Welcome "+member.getName());;
-            if(member.getRoles().equals("MEMBER")) {
-                mav.addObject("roleMessage","회원가입 및 로그인이 완료되었습니다!");
-            }
         }
         mav.addObject("messages",messages);
-        mav.setViewName("users");
-
+        mav.setViewName("boards");
         return mav;
     }
 
-    @GetMapping(value = "/about")
-    public String about(){
-        return "about";
+    @GetMapping(value = "/write")
+    public ModelAndView write() {
+        ModelAndView mav = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Member member = memberRepository.findByEmail(auth.getName());
+        mav.addObject("currentMember",member);
+        mav.setViewName("write");
+        return mav;
     }
 
+    @GetMapping(value="/read")
+    public ModelAndView read() {
+        ModelAndView mav = new ModelAndView();
+        return  mav;
+    }
 }

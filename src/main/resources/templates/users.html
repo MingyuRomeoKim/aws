@@ -23,7 +23,7 @@
             <td colspan="4">가입 한 회원이 아직 없네요.</td>
         </tr>
         <tr th:each="message : ${messages}">
-            <td th:text="${message.idx}">idx ...</td>
+            <td th:text="${#numbers.formatInteger(message.idx,1)}">idx ...</td>
             <td th:text="${message.email}">email ...</td>
             <!--            <td><a href="view.html" th:href="@{'/' + ${task.id}}" th:text="${task.title}">Title ...</a></td>-->
             <td th:text="${message.name}">name ...</td>

@@ -45,12 +45,12 @@ public class MemberServiceImpl implements MemberService,UserDetailsService {
 
     @Override
     public Member findByIdx(Long idx) {
-        return null;
+        return memberRepository.findByIdx(idx);
     }
 
     @Override
     public List<Member> findAllByOrderByIdxDesc() {
-        return null;
+        return memberRepository.findAllByOrderByIdxDesc();
     }
 
     @Override

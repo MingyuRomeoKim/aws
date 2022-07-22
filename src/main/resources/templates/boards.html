@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <h2>문의 게시판</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <td>글번호</td>
+            <td>제목</td>
+            <td>작성자</td>
+            <td>조회수</td>
+            <td>작성일</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${messages.empty}">
+            <td colspan="6">아직 작성된 문의 사항이 없어요.</td>
+        </tr>
+        <tr th:each="message : ${messages}">
+            <td th:text="${#numbers.formatInteger(message.idx,1)}">idx ...</td>
+            <td><a href="/boards/read/${#numbers.formatInteger(message.idx,1)}" th:href="@{'/boards/read/' + ${#numbers.formatInteger(message.idx,1)}}" th:text="${message.title}">Title ...</a></td>
+            <td th:text="${message.member_name}">name ...</td>
+            <td th:text="${#numbers.formatInteger(message.viewCnt,1)}">view count ...</td>
+            <td th:text="${message.regDate}">regDate ...</td>>
+        </tr>
+        </tbody>
+    </table>
+    <form class="form-signin" th:action="@{/boards/write}" method="get">
+        <button class="btn btn-md btn-success btn-block" type="Submit">글쓰기</button>
+    </form>
+</div>
+</body>
+</html>

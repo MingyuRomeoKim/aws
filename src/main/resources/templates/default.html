@@ -24,11 +24,14 @@
             <li class="nav-item " id="nav-users">
                 <a class="nav-link" href="/users">Users <span class="sr-only"></span></a>
             </li>
+            <li class="nav-item " id="nav-boards">
+                <a class="nav-link" href="/boards">Boards <span class="sr-only"></span></a>
+            </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" th:if="${currentMember == null}"><a class="nav-link" th:href="@{/login}">Log in</a></li>
             <li class="nav-item" th:if="${currentMember}">
-                <a class="nav-link" th:text="${fullName}"></a>
+                <a class="nav-link" th:text="${currentMember.name}"></a>
                 <form th:action="@{/logout}" method="post">
                     <input type="submit" value="Sign Out"/>
                 </form>

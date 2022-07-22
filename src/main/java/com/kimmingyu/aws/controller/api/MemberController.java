@@ -31,11 +31,6 @@ public class MemberController {
         return ObjectMapperUtils.mapAll(memberService.findAll(), MemberDTO.class);
     }
 
-    @PostMapping(value = "/login")
-    public String login() {
-        return "";
-    }
-
     @GetMapping(value = "/byEmail/{email}")
     public MemberDTO getMemberByEmail(@PathVariable("email") String email) {
         return ObjectMapperUtils.map(memberService.findByEmail(email),MemberDTO.class);
@@ -49,6 +44,11 @@ public class MemberController {
     @GetMapping(value = "/orderByName")
     public List<MemberDTO> findAllByOrderByNameDesc() {
         return ObjectMapperUtils.mapAll(memberService.findAllByOrderByNameDesc(),MemberDTO.class);
+    }
+
+    @GetMapping(value = "/orderByIdxDesc")
+    public List<MemberDTO> findAllByOrderByIdxDesc() {
+        return ObjectMapperUtils.mapAll(memberService.findAllByOrderByIdxDesc(),MemberDTO.class);
     }
 
     @PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
